@@ -1,10 +1,12 @@
-import React from 'react'
+//C:\Users\19892\Desktop\automation\src\app\(main)\(pages)\workflows\editor\page.tsx
+'use client'
+import { useRouter } from "next/navigation"
 
-type Props = {}
+const Page = ( ) => {
+    const router = useRouter()
 
-const Page = (props: Props) => {
-  //CHALLENGE: If the user tries to access this route you should send them to their first workflow they have or create one or you can have your own behavior.
-  return <div>Page</div>
+  return router.push("/workflows")
+
 }
 
 export default Page
