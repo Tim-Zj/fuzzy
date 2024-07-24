@@ -1,12 +1,14 @@
-//C:\Users\19892\Desktop\automation\src\middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
 const isPublicRoute = createRouteMatcher([
   "/",
   "/site",
   "/api/uploadthing",
   "/agency/sign-in(.*)",
   "/agency/sign-up(.*)",
+  "/sign-in(.*)",    // 添加公共路由
+  "/sign-up(.*)",    // 添加公共路由
 ]);
 
 export default clerkMiddleware((auth, request) => {
@@ -18,18 +20,21 @@ export default clerkMiddleware((auth, request) => {
     searchParams.length > 0 ? `?${searchParams}` : ""
   }`;
 
-  // if (!userId || userId) {
-  //   if (
-  //     url.pathname === "/" ||
-  //     (url.pathname === "/site" && url.host === process.env.NEXT_PUBLIC_DOMAIN)
-  //   ) {
-  //     return NextResponse.rewrite(new URL("/site", request.url));
-  //   }
-  // }
-  if (!isPublicRoute(request)) auth().protect();
-  // get the user Clerk user ID
+  if (isPublicRoute(request)) {
+    return NextResponse.next();  // 如果是公共路由，直接跳过保护
+  }
+
+  if (!userId) {
+    if (url.pathname !== "/sign-in" && url.pathname !== "/sign-up") {
+      return NextResponse.redirect(new URL(`/sign-in?redirect_url=${encodeURIComponent(url.toString())}`, request.url));
+    }
+  }
+
   if (userId) {
-    //if subdomain exists
+    if (url.pathname === "/sign-in" || url.pathname === "/sign-up") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
     const customSubDomain = hostname
       .get("host")
       ?.split(`${process.env.NEXT_PUBLIC_DOMAIN}`)
@@ -41,9 +46,6 @@ export default clerkMiddleware((auth, request) => {
       );
     }
 
-    if (url.pathname === "/sign-in" || url.pathname === "/sign-up") {
-      return NextResponse.redirect(new URL(`/agency/sign-in`, request.url));
-    }
     if (
       url.pathname.startsWith("/agency") ||
       url.pathname.startsWith("/subaccount")
