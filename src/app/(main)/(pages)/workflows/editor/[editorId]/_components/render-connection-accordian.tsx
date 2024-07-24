@@ -2,13 +2,13 @@
 
 import React from 'react'
 import { CheckIcon, ChevronsUpDown } from 'lucide-react'
-
+import { useFuzzieStore } from "@/zustand-store";
 import ConnectionCard from '@/app/(main)/(pages)/connections/_components/connection-card'
 import { AccordionContent } from '@/components/ui/accordion'
 import MultipleSelector from '@/components/ui/multiple-selector'
 import { Connection } from '@/lib/types'
 import { EditorState } from '@/providers/editor-provider'
-import { useFuzzieStore } from '@/zustand-store'
+import {  } from '@/zustand-store'
 import {
   Command,
   CommandEmpty,

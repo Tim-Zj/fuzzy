@@ -24,11 +24,21 @@ const UploadCareButton = ({ onUpload }: Props) => {
         router.refresh()
       }
     }
-    ctxProviderRef.current.addEventListener('file-upload-success', handleUpload)
-  }, [])
+
+    const currentCtxProviderRef = ctxProviderRef.current;
+    if (currentCtxProviderRef) {
+      currentCtxProviderRef.addEventListener('file-upload-success', handleUpload);
+    }
+
+    return () => {
+      if (currentCtxProviderRef) {
+        currentCtxProviderRef.removeEventListener('file-upload-success', handleUpload);
+      }
+    };
+  }, [onUpload, router]);
 
   return (
-    <><div>
+    <div>
       <lr-config
         ctx-name="my-uploader"
         pubkey="0dd074a75d3ad67d3ee1"
@@ -44,8 +54,6 @@ const UploadCareButton = ({ onUpload }: Props) => {
         ref={ctxProviderRef}
       />
     </div>
-      
-      </>
   )
 }
 

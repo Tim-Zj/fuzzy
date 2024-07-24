@@ -6,7 +6,7 @@ import MultipleSelector from '@/components/ui/multiple-selector'
 import { Connection } from '@/lib/types'
 import { useNodeConnections } from '@/providers/connections-provider'
 import { EditorState } from '@/providers/editor-provider'
-import { useFuzzieStore } from '@/store'
+import { useFuzzieStore } from '@/zustand-store'
 import {
   Command,
   CommandEmpty,

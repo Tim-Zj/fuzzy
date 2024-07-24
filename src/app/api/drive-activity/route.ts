@@ -1,9 +1,13 @@
+//C:\Users\19892\Desktop\automation\src\app\api\drive-activity\route.ts
 import { google } from 'googleapis'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 import { db } from '@/lib/db'
-
+interface OauthAccessToken {
+  token: string;
+  // 其他属性
+}
 export async function GET() {
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -19,9 +23,12 @@ export async function GET() {
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
     'oauth_google'
-  )
+  )as unknown as OauthAccessToken[]; // 强制类型断言
 
-  const accessToken = clerkResponse[0].token
+  const accessToken = clerkResponse[0]?.token; // 使用可选链操作符以防止 undefined 错误
+  if (!accessToken) {
+    return NextResponse.json({ message: 'Access token not found' });
+  }
   oauth2Client.setCredentials({
     access_token: accessToken,
   })

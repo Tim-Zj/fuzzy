@@ -1,10 +1,10 @@
+//C:\Users\19892\Desktop\automation\src\app\layout.tsx
+import React from "react";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-
 import "./globals.css";
-
-import { ThemeProvider } from "@/providers/theme-prpvider";
-import { ClerkProvider } from '@clerk/nextjs/'
+import { ThemeProvider } from "@/providers/theme-provider";
+import { ClerkProvider } from '@clerk/nextjs'
 import ModalProvider from "@/providers/modal-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { BillingProvider } from "@/providers/billing-provider";
