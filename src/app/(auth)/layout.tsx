@@ -1,3 +1,4 @@
+//C:\Users\19892\Desktop\automation\src\app\(auth)\layout.tsx
 import React from 'react'
 
 type Props = { children: React.ReactNode }
