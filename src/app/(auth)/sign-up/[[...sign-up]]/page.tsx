@@ -1,4 +1,5 @@
 // src/app/(auth)/sign-in/page.tsx
+"use client"
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { SignUp, useAuth } from '@clerk/nextjs';
