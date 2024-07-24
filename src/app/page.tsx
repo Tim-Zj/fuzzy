@@ -1,3 +1,4 @@
+//C:\Users\19892\Desktop\automation\src\app\page.tsx
 import Image from "next/image";
 import Navbar  from "@/components/global/Navbar";
 import {ContainerScroll} from "@/components/global/container-scroll-animation";
@@ -28,17 +29,18 @@ export default function Home() {
                   </span>
                 </Button>
                 <h1 className="text-5xl md:text-8xl  bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-600 font-sans font-bold">
-                  Automate Your Work With Fuzzie
+                  Automate Your Work With Fuzzy
                 </h1>
               </div>
             }
             >
               <Image
-              src="/temp-banner.png"
-              width={800}
-              height ={400}
-              alt="banner"
-              />
+  src="/temp-banner.png"
+  width={800}
+  height={400}
+  alt="banner"
+  className="w-full h-auto"
+/>
           </ContainerScroll>
 
       </div>

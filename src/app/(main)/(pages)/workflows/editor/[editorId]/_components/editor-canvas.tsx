@@ -1,7 +1,11 @@
 'use client'
-import { EditorCanvasCardType, EditorNodeType } from '@/lib/types'
-import { useEditor } from '@/providers/editor-provider'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+
+import { EditorCanvasCardType, EditorNodeType } from '@/lib/types';
+import { useEditor } from '@/providers/editor-provider';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import { EditorCanvasDefaultCardTypes } from '@/lib/constant';
+
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactFlow, {
   Background,
   Connection,
@@ -11,39 +15,50 @@ import ReactFlow, {
   MiniMap,
   NodeChange,
   ReactFlowInstance,
-  applyNodeChanges,
-  applyEdgeChanges,
   addEdge,
-} from 'reactflow'
-import 'reactflow/dist/style.css'
-import EditorCanvasCardSingle from './editor-canvas-card-single'
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui/resizable'
-import { toast } from 'sonner'
-import { usePathname } from 'next/navigation'
-import { v4 } from 'uuid'
-import { EditorCanvasDefaultCardTypes } from '@/lib/constant'
-import FlowInstance from './flow-instance'
-import EditorCanvasSidebar from './editor-canvas-sidebar'
-import { onGetNodesEdges } from '../../../_actions/workflow-connections'
+  applyEdgeChanges,
+  applyNodeChanges
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import { usePathname } from 'next/navigation';
+import { toast } from 'sonner';
+import { v4 } from "uuid"
 
-type Props = {}
+import EditorCanvasCardSingle from './editor-canvas-card-single';
+import FlowInstance from './flow-instance';
+import EditorCanvasSidebar from './editor-canvas-sidebar';
+import { onGetNodesEdges } from '../../../_actions/workflow-connection';
 
 const initialNodes: EditorNodeType[] = []
 
 const initialEdges: { id: string; source: string; target: string }[] = []
 
-const EditorCanvas = (props: Props) => {
+const EditorCanvas = () => {
+  const pathname = usePathname()
   const { dispatch, state } = useEditor()
+
   const [nodes, setNodes] = useState(initialNodes)
   const [edges, setEdges] = useState(initialEdges)
   const [isWorkFlowLoading, setIsWorkFlowLoading] = useState<boolean>(false)
-  const [reactFlowInstance, setReactFlowInstance] =
-    useState<ReactFlowInstance>()
-  const pathname = usePathname()
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>()
+
+  const nodeTypes = useMemo(
+    () => ({
+      Action: EditorCanvasCardSingle,
+      Trigger: EditorCanvasCardSingle,
+      Email: EditorCanvasCardSingle,
+      Condition: EditorCanvasCardSingle,
+      AI: EditorCanvasCardSingle,
+      Slack: EditorCanvasCardSingle,
+      'Google Drive': EditorCanvasCardSingle,
+      Notion: EditorCanvasCardSingle,
+      Discord: EditorCanvasCardSingle,
+      'Custom Webhook': EditorCanvasCardSingle,
+      'Google Calendar': EditorCanvasCardSingle,
+      Wait: EditorCanvasCardSingle,
+    }),
+    []
+  )
 
   const onDragOver = useCallback((event: any) => {
     event.preventDefault()
@@ -142,26 +157,8 @@ const EditorCanvas = (props: Props) => {
   }
 
   useEffect(() => {
-    dispatch({ type: 'LOAD_DATA', payload: { edges, elements: nodes } })
-  }, [nodes, edges])
-
-  const nodeTypes = useMemo(
-    () => ({
-      Action: EditorCanvasCardSingle,
-      Trigger: EditorCanvasCardSingle,
-      Email: EditorCanvasCardSingle,
-      Condition: EditorCanvasCardSingle,
-      AI: EditorCanvasCardSingle,
-      Slack: EditorCanvasCardSingle,
-      'Google Drive': EditorCanvasCardSingle,
-      Notion: EditorCanvasCardSingle,
-      Discord: EditorCanvasCardSingle,
-      'Custom Webhook': EditorCanvasCardSingle,
-      'Google Calendar': EditorCanvasCardSingle,
-      Wait: EditorCanvasCardSingle,
-    }),
-    []
-  )
+    dispatch({ type: "LOAD_DATA", payload: { edges, elements:nodes} })
+  } , [nodes, edges])
 
   const onGetWorkFlow = async () => {
     setIsWorkFlowLoading(true)
@@ -179,12 +176,15 @@ const EditorCanvas = (props: Props) => {
   }, [])
 
   return (
-    <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={70}>
-        <div className="flex h-full items-center justify-center">
+    <ResizablePanelGroup
+      direction='horizontal'
+      className=""
+    >
+      <ResizablePanel defaultSize={70} >
+        <div className='flex h-full items-center justify-center' >
           <div
-            style={{ width: '100%', height: '100%', paddingBottom: '70px' }}
-            className="relative"
+            style={{ width: '100%', height: '100%' }}
+            className='relative'
           >
             {isWorkFlowLoading ? (
               <div className="absolute flex h-full w-full items-center justify-center">
@@ -220,16 +220,16 @@ const EditorCanvas = (props: Props) => {
                 onClick={handleClickCanvas}
                 nodeTypes={nodeTypes}
               >
-                <Controls position="top-left" />
+                <Controls position='top-left' />
                 <MiniMap
-                  position="bottom-left"
-                  className="!bg-background"
+                  position='bottom-left'
+                  className='!bg-background'
                   zoomable
                   pannable
                 />
                 <Background
                   //@ts-ignore
-                  variant="dots"
+                  variant='dots'
                   gap={12}
                   size={1}
                 />
@@ -272,7 +272,7 @@ const EditorCanvas = (props: Props) => {
         )}
       </ResizablePanel>
     </ResizablePanelGroup>
-  )
+  );
 }
 
-export default EditorCanvas
+export default EditorCanvas;

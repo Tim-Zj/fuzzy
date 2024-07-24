@@ -9,6 +9,7 @@ const WorkflowsPage = () => {
                 <WorkflowButton />
             </h1>
             <Workflows />
+            <Workflows />
         </div>
      );
 }

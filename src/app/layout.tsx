@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"
-import { ClerkProvider } from "@clerk/nextjs";
 
+import "./globals.css";
+
+import { ThemeProvider } from "@/providers/theme-prpvider";
+import { ClerkProvider } from '@clerk/nextjs'
+import ModalProvider from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { BillingProvider } from "@/providers/billing-provider";
 
 const font = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "fuzzy",
-  description: "boost your work by fuzzy",
+  title: "Tim's Fuzzy",
+  description: "Automate Your Work With Tim's Fuzzy",
 };
 
 export default function RootLayout({
@@ -18,20 +22,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-    <html lang="en">
-      <body className={font.className}>
-      <ThemeProvider
+    <ClerkProvider>
+      <html lang="en">
+        <body className={font.className}>
+          <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-        
-        {children}
-        </ThemeProvider>
+            <BillingProvider>
+              <ModalProvider>
+                {children}
+                <Toaster />
+              </ModalProvider>
+            </BillingProvider>
+          </ThemeProvider>
         </body>
-    </html>
+      </html>
     </ClerkProvider>
   );
 }

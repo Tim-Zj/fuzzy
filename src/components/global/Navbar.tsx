@@ -17,13 +17,13 @@ const Navbar = async (props: Props) => {
           src="/fuzzieLogo.png"
           width={15}
           height={15}
-          alt="fuzzie logo"
+          alt="fuzzy logo"
           className="shadow-sm"
         />
         <p className="text-3xl font-bold">zzy</p>
       </aside>
       <nav className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] hidden md:block">
-        <ul className="flex items-center gap-4 list-none">
+        {/* <ul className="flex items-center gap-4 list-none">
           <li>
             <Link href="#">Products</Link>
           </li>
@@ -42,7 +42,7 @@ const Navbar = async (props: Props) => {
           <li>
             <Link href="#">Enterprise</Link>
           </li>
-        </ul>
+        </ul> */}
       </nav>
       <aside className="flex items-center gap-4">
         <Link
