@@ -1,4 +1,5 @@
 //C:\Users\19892\Desktop\automation\src\app\(auth)\layout.tsx
+"use client"
 import React from 'react'
 
 type Props = { children: React.ReactNode }
