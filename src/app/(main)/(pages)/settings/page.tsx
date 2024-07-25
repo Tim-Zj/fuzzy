@@ -1,9 +1,11 @@
+
 import ProfileForm from '@/components/forms/profile_form'
 import React from 'react'
 import ProfilePicture from './_components/profile-picture'
 import { db } from '@/lib/db'
 import { currentUser } from '@clerk/nextjs/server'
 import { FileUploaderRegular } from '@uploadcare/react-uploader'
+import { clients } from '@/lib/constant'
 
 type Props = {}
 
