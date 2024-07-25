@@ -23,8 +23,8 @@ const Navbar = async (props: Props) => {
         <p className="text-3xl font-bold">zzy</p>
       </aside>
       <nav className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] hidden md:block">
-        {/* <ul className="flex items-center gap-4 list-none">
-          <li>
+        <ul className="flex items-center gap-4 list-none">
+          {/* <li>
             <Link href="#">Products</Link>
           </li>
           <li>
@@ -38,11 +38,11 @@ const Navbar = async (props: Props) => {
           </li>
           <li>
             <Link href="#">Documentation</Link>
-          </li>
+          </li> */}
           <li>
-            <Link href="#">Enterprise</Link>
+            <Link href="https://github.com/Tim-Zj/fuzzy">Github Page</Link>
           </li>
-        </ul> */}
+        </ul>
       </nav>
       <aside className="flex items-center gap-4">
         <Link
